@@ -1,4 +1,5 @@
 import numpy as np
+import argparse
 import cv2
 import cv2.aruco as aruco
 from calibrate import load_coefficients
@@ -7,10 +8,14 @@ cap = cv2.VideoCapture(0)  # Get the camera source
 
 
 
-def track(matrix_coefficients, distortion_coefficients):
+def track(matrix_coefficients, distortion_coefficients, capture=None):
 
     while True:
-        ret, frame = cap.read()
+        ret, frame = capture.read()
+
+        if ret == False:
+            break
+
         # operations on the frame come here
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # Change grayscale
         aruco_dict = aruco.Dictionary_get(aruco.DICT_5X5_100)  # Use 5x5 dictionary to find markers
@@ -53,7 +58,7 @@ def track(matrix_coefficients, distortion_coefficients):
         # Display the resulting frame
         cv2.imshow('frame', frame)
         # Wait 3 milisecoonds for an interaction. Check the key and do the corresponding job.
-        key = cv2.waitKey(3) & 0xFF
+        key = cv2.waitKey() & 0xFF
         if key == ord('q'):  # Quit
             break
     
@@ -63,6 +68,16 @@ def track(matrix_coefficients, distortion_coefficients):
 
 
 if __name__ == '__main__':
-    camera_matrix, dist_matrix = load_coefficients("camera.yml")
-    track(matrix_coefficients=camera_matrix,distortion_coefficients=dist_matrix)
+    parser = argparse.ArgumentParser(description='Camera calibration')
+    parser.add_argument('--vid_path', type=str, required=True, help='video directory path')
+
+    args = parser.parse_args()
+    if(args.vid_path == None):
+        cap = cv2.VideoCapture(0)  # Get the camera source
+        print("No Video File Selected! Using Default Camera Input!")
+    else:
+        cap = cv2.VideoCapture(args.vid_path)
+
+    camera_matrix, dist_matrix = load_coefficients("phone.yml")
+    track(matrix_coefficients=camera_matrix,distortion_coefficients=dist_matrix, capture=cap)
     

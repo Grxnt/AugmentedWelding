@@ -3,10 +3,18 @@ import cv2
 import time
 
 
+#Resources Used:
+#https://nanonets.com/blog/optical-flow/#implementing-sparse-optical-flow
+#https://pysource.com/2018/05/14/optical-flow-with-lucas-kanade-method-opencv-3-4-with-python-3-tutorial-31/
+#https://www.youtube.com/watch?v=hfXMw2dQO4E&t=459s&ab_channel=NicolaiNielsen-ComputerVision%26AI
+
+#OPTICAL FLOW DEMO add 'VID1.M4V' to file directory or change to '0' to access webcam
+
+#lucas kanade algorithm parameters
 lk_params = dict(winSize  = (15, 15),
                 maxLevel = 2,
                 criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
-
+#parameters for goodfeatures()
 feature_params = dict(maxCorners = 20,
                     qualityLevel = 0.3,
                     minDistance = 10,
@@ -21,7 +29,7 @@ frame_idx = 0
 
 cap = cv2.VideoCapture('vid1.m4v')
 
-
+#press q to exit program
 while True:
 
     # start time to calculate FPS

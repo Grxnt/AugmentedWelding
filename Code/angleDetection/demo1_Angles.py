@@ -85,8 +85,15 @@ def track(matrix_coefficients, distortion_coefficients, capture=None):
             print("Work Angle is: ", work_angle)
             print("Travel Angle is: ", travel_angle)
 
+        # Scale image so that it doesn't take up the whole screen
+        scale = 0.6
+        width = int(frame.shape[1] * scale)
+        height = int(frame.shape[0] * scale)
+        dim = (width, height)
+        resized = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
+
         # Display the resulting frame
-        cv2.imshow('frame', frame)
+        cv2.imshow('frame', resized)
         # Wait until a key press is made
         key = cv2.waitKey() & 0xFF
         if key == ord('q'):  # Quit

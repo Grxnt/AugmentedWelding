@@ -2,11 +2,11 @@ import numpy as np
 import cv2
 import time
 
-
+#lucas kanade algorithm parameters
 lk_params = dict(winSize  = (15, 15),
                 maxLevel = 2,
                 criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
-
+#parameters for goodfeatures()
 feature_params = dict(maxCorners = 20,
                     qualityLevel = 0.3,
                     minDistance = 10,
@@ -21,7 +21,7 @@ frame_idx = 0
 
 cap = cv2.VideoCapture('vid1.m4v')
 
-
+#press q to exit program
 while True:
 
     # start time to calculate FPS

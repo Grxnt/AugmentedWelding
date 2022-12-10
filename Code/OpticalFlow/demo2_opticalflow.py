@@ -27,7 +27,7 @@ trajectories = []
 frame_idx = 0
 
 
-cap = cv2.VideoCapture('vid1.m4v')
+cap = cv2.VideoCapture('Media/videos/vid1.m4v')
 
 #press q to exit program
 while True:
